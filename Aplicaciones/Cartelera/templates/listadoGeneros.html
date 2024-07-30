@@ -1,0 +1,52 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br>
+<h3 class="card">
+    <div class="card-title text-center">
+        <br>
+        <h3><b>Listado de Géneros</b></h3>
+    </div>
+    <div class="text-end">
+        <a href="{% url 'nuevoGenero' %}" class="btn btn-success">Agregar Género</a>
+    </div>
+    <br>
+    <table class="table table-bordered table-striped table-hover" id="tbl-generos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>FOTO</th> <!--25JUNIO INCLUIMOS PARA VER FOTOS-->
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--VOY A OCUPAR JINJA2 PARA TRAER LOS DATOS DE LA BDD-->
+            {% for generoTemporal in generos %}
+            <tr>
+                <td>{{generoTemporal.id}}</td>
+                <td>{{generoTemporal.nombre}}</td>
+                <td> <!--EMPIEZO A VER LAS FOTOS -->
+                    <!--EN ESTA PARTE VALIDO SI HAY O NO FOTOGRAFÍAS-->
+                    {% if generoTemporal.foto %} <!--HAGO UN IF PARA QUE ME VALIDE SI TENGO O NO IMAGENES ANTERIORES-->
+                    <a  href="{{ generoTemporal.foto.url }}" target="_blank">
+                        <img src="{{ generoTemporal.foto.url }}" alt=""> </a>
+                        {% else %}
+                            <p>No hay imagen disponible</p> <!--y si no hay imagens me cargue este texto-->
+                    {% endif %}     <!--FINALIZACIÓN DEL IF-ELSE-->                  
+                </td>
+                <!--AÑADIMOS BOTONES-->
+                <td>
+                    <a href="{% url 'editarGenero' generoTemporal.id %}" class="btn  btn-warning">Editar</a>
+                    <a href="{% url 'eliminarGenero' generoTemporal.id %}" class="btn  btn-danger" onclick="return confirm('Desea borrar el registro');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</h3>
+<br>
+<script>
+    //identifica la tabla y transformala en un DataTable
+    let table = new DataTable('#tbl-generos');
+</script>
+{% endblock %}

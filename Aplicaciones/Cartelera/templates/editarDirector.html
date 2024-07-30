@@ -1,0 +1,39 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br>
+<div class="container-fluid">
+    <div class="=row">
+        <div class="col-md-12">
+            <!--la etiqueta FORM me va ayudar a guardar los datos-->
+            <form action="{% url 'procesarActualizacionDirector' %}" enctype="multipart/form-data" method="post"> <!--METODO POST PARA QUE LOS DATOS VIAJEN A TRAVÉZ DEL METODO POST-->
+                {% csrf_token %} <!--#esta línea me ayuda a guardar los datos-->
+                <input type="hidden" name="id" id="id" class="form-control" value="{{directorEditar.id}}"> <!--EN ESTA LÍNEA EL TYPE: HIDDEN ME PERMITE ESCONDER EL VALOR DEL ID-->
+                <label for="">Cédula:</label>
+                <input type="text" name="dni" id="dni" class="form-control" value="{{directorEditar.dni}}">
+                <label for="">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" value="{{directorEditar.nombre}}">
+                <label for="">Apellido:</label>
+                <input type="text" name="apellido" id="apellido" class="form-control" value="{{directorEditar.apellido}}">
+                <label for="">Estado:</label>
+                <select name="estado" id="estado" class="form-control">
+                    <option value="True">True</option>
+                    <option value="False">False</option>
+                </select>       
+                <label for="">Foto:</label>
+                <div class="input-group">
+                    <input type="file" name="foto" id="foto" accept="image/*" class="form-control">
+                    {% if directorEditar.foto %}
+                        <span class="input-group-text">Archivo actual: {{ directorEditar.foto.name }}</span>
+                    {% endif %}
+                </div>
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'listadoDirectores' %}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+
+{% endblock %}

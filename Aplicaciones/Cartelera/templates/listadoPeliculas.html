@@ -1,0 +1,47 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br>
+<h3 class="card">
+    <div class="card-title text-center">
+        <h3><b>Listado de Películas</b></h3>
+    </div>
+    <br>
+    <div class="text-end">
+        <a href="#" class="btn btn-success">Agregar Directores</a>
+    </div>
+    <table class="table table-bordered table-striped table-hover" id="tbl-generos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>TÍTULO</th>
+                <th>DURACIÓN</th>
+                <th>SINOPSIS</th>
+                <th>GÉNERO</th>
+                <th>DIRECTOR</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for peliculasTemporal in peliculas %}
+            <tr>
+                <td>{{peliculasTemporal.id}}</td>
+                <td>{{peliculasTemporal.titulo}}</td>
+                <td>{{peliculasTemporal.duracion}}</td>
+                <td>{{peliculasTemporal.sinopsis}}</td>
+                <td>{{peliculasTemporal.genero}}</td>
+                <td>{{peliculasTemporal.director}}</td>
+                <td>
+                    <a href="#" class="btn  btn-warning">Editar</a>
+                    <a href="#" class="btn  btn-danger" onclick="return confirm('Desea borrar el registro');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</h3>
+<br>
+<script>
+    //identifica la tabla y transformala en un DataTable
+    let table = new DataTable('#tbl-generos');
+</script>
+{% endblock %}

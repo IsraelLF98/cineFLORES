@@ -1,0 +1,26 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br>
+<div class="container-fluid">
+    <div class="=row">
+        <div class="col-md-12">
+            <!--la etiqueta FORM me va ayudar a guardar los datos-->
+            <form action="{% url 'guardarPais' %}" method="post"> <!--METODO POST PARA QUE LOS DATOS VIAJEN A TRAVÉZ DEL METODO POST-->
+                {% csrf_token %} <!--#esta línea me ayuda a guardar los datos-->
+                <label for="">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre del género">
+                <label for="">Continente:</label>
+                <input type="text" name="continente" id="continente" class="form-control" placeholder="Ingrese el nombre del género">
+                <label for="">Capital:</label>
+                <input type="text" name="capital" id="capital" class="form-control" placeholder="Ingrese el nombre del género">
+                <br>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'listadoPais' %}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+
+{% endblock %}

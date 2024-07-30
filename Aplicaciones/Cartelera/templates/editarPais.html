@@ -1,0 +1,27 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br>
+<div class="container-fluid">
+    <div class="=row">
+        <div class="col-md-12">
+            <!--la etiqueta FORM me va ayudar a guardar los datos-->
+            <form action="{% url 'procesarActualizacionPais' %}" method="post"> <!--METODO POST PARA QUE LOS DATOS VIAJEN A TRAVÉZ DEL METODO POST-->
+                {% csrf_token %} <!--#esta línea me ayuda a guardar los datos-->
+                <input type="hidden" name="id" id="id" class="form-control" value="{{paisEditar.id}}"> <!--EN ESTA LÍNEA EL TYPE: HIDDEN ME PERMITE ESCONDER EL VALOR DEL ID-->
+                <label for="">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" value="{{paisEditar.nombre}}">
+                <label for="">Continente:</label>
+                <input type="text" name="continente" id="continente" class="form-control" value="{{paisEditar.continente}}">
+                <label for="">Capital:</label>
+                <input type="text" name="capital" id="capital" class="form-control" value="{{paisEditar.capital}}">
+                <br>
+                <button type="submit" class="btn btn-warning">Actualizar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'listadoPais' %}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+
+{% endblock %}

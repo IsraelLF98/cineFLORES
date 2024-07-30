@@ -1,0 +1,34 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br>
+<div class="container-fluid">
+    <div class="=row">
+        <div class="col-md-12">
+            <!--la etiqueta FORM me va ayudar a guardar los datos-->
+            <form action="{% url 'guardarDirector' %}" enctype="multipart/form-data"  method="post"> <!--METODO POST PARA QUE LOS DATOS VIAJEN A TRAVÉZ DEL METODO POST-->
+                {% csrf_token %} <!--#esta línea me ayuda a guardar los datos-->
+                <label for="">Cédula:</label>
+                <input type="text" name="dni" id="dni" class="form-control" placeholder="Ingrese el nombre del género">
+                <label for="">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre del género">
+                <label for="">Apellido:</label>
+                <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Ingrese el nombre del género">
+                <label for="">Estado:</label>
+                <select name="estado" id="estado" class="form-control" >
+                    <option value="True">True</option>
+                    <option value="False">False</option>
+                </select>
+                <br>
+                <label for="" >Fotografía:</label>
+                <input type="file" name="foto" id="foto" accept="image/*" class="form-control" placeholder="Ingrese el archivo">
+                <br>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'listadoDirectores' %}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+
+{% endblock %}

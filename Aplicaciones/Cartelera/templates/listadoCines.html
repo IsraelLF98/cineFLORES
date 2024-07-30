@@ -1,0 +1,33 @@
+<br>
+<table class="table table-bordered table-striped table-hover" id="tbl-generos">
+    <thead>
+        <tr>
+            <th class="text-center">ID</th>
+            <th class="text-center">NOMBRE</th>
+            <th class="text-center">DIRECCIÓN</th>
+            <th class="text-center">TELÉFONO</th>
+            <th class="text-center">ACCIONES</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cineTemporal in cines %}
+        <tr>
+            <td class="text-center">{{cineTemporal.id}}</td>
+            <td class="text-center">{{cineTemporal.nombre}}</td>
+            <td class="text-center">{{cineTemporal.direccion}}</td>
+            <td class="text-center">{{cineTemporal.telefono}}</td>
+            <td class="text-center">
+                <a href="#" class="btn btn-warning">
+                    <i class="fa-solid fa-pen"></i> 
+                </a>
+                <a href="#" class="btn btn-danger" onclick="return confirm('Desea borrar el registro');">
+                    <i class="fa-solid fa-trash"></i> 
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+    //identifica la tabla y transformala en un DataTable
+    let table = new DataTable('#tbl-generos');
+</script>

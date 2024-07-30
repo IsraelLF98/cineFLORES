@@ -1,0 +1,46 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br>
+<h3 class="card">
+    <div class="card-title text-center">
+        <br>
+        <h3><b>Listado de Géneros</b></h3>
+    </div>
+    <div class="text-end">
+        <a href="{% url 'nuevoPais' %}" class="btn btn-success">Agregar País</a>
+    </div>
+    <br>
+    <table class="table table-bordered table-striped table-hover" id="tbl-generos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>CONTINENTE</th>
+                <th>CAPITAL</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!--VOY A OCUPAR JINJA2 PARA TRAER LOS DATOS DE LA BDD-->
+            {% for paisTemporal in pais %}
+            <tr>
+                <td>{{paisTemporal.id}}</td>
+                <td>{{paisTemporal.nombre}}</td>
+                <td>{{paisTemporal.continente}}</td>
+                <td>{{paisTemporal.capital}}</td>
+                <!--AÑADIMOS BOTONES-->
+                <td>
+                    <a href="{% url 'editarPais' paisTemporal.id %}" class="btn  btn-warning">Editar</a>
+                    <a href="{% url 'eliminarPais' paisTemporal.id %}" class="btn  btn-danger" onclick="return confirm('Desea borrar el registro');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</h3>
+<br>
+<script>
+    //identifica la tabla y transformala en un DataTable
+    let table = new DataTable('#tbl-generos');
+</script>
+{% endblock %}

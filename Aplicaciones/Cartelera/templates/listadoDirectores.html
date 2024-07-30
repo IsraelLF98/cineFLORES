@@ -1,0 +1,55 @@
+{% extends "./plantilla.html" %}
+{% block body %}
+<br>
+<h3 class="card">
+    <div class="card-title text-center">
+        <h3><b>Listado de Directores</b></h3>
+    </div>
+    <br>
+    <div class="text-end">
+        <a href="{% url 'nuevoDirector' %}" class="btn btn-success">Agregar Directores</a>
+    </div>
+    <table class="table table-bordered table-striped table-hover" id="tbl-generos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>CÉDULA</th>
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+                <th>ESTADO</th>
+                <th>FOTO</th>
+                <th>ACCIONES</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for directoresTemporal in directores %}
+            <tr>
+                <td>{{directoresTemporal.id}}</td>
+                <td>{{directoresTemporal.dni}}</td>
+                <td>{{directoresTemporal.nombre}}</td>
+                <td>{{directoresTemporal.apellido}}</td>
+                <td>{{directoresTemporal.estado}}</td>
+                <td> <!--EMPIEZO A VER LAS FOTOS -->
+                    <!--EN ESTA PARTE VALIDO SI HAY O NO FOTOGRAFÍAS-->
+                    {% if directoresTemporal.foto %} <!--HAGO UN IF PARA QUE ME VALIDE SI TENGO O NO IMAGENES ANTERIORES-->
+                    <a  href="{{ directoresTemporal.foto.url }}" target="_blank">
+                        <img src="{{ directoresTemporal.foto.url }}" alt=""> </a>
+                        {% else %}
+                            <p>No hay imagen disponible</p> <!--y si no hay imagens me cargue este texto-->
+                    {% endif %}     <!--FINALIZACIÓN DEL IF-ELSE-->                  
+                </td>
+                <td>
+                    <a href="{% url 'editarDirector' directoresTemporal.id %}" class="btn  btn-warning">Editar</a>
+                    <a href="{% url 'eliminarDirector' directoresTemporal.id %}" class="btn  btn-danger" onclick="return confirm('Desea borrar el registro');">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</h3>
+<br>
+<script>
+    //identifica la tabla y transformala en un DataTable
+    let table = new DataTable('#tbl-generos');
+</script>
+{% endblock %}

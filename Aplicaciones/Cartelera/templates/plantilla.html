@@ -1,0 +1,102 @@
+{% load static %} <!--INCLUIMOS PARA TRABAJAR CON JQUERY VALIDATE-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINE UTC</title>
+    <!--IMPORTANDO JQUERY-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!--IMPORTANDO BOOTSTRAP-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!--IMPORTANDO DATATABLES-->
+    <link rel="stylesheet" href="//cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
+    <script src="//cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+    <!--IMPORTANDO SWEETALERT-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--IMPORTANDO JQUERY VALIDATE DESDE MI CARPETA STATIC-->
+    <script src="{% static 'librerias/jquery-validation/dist/jquery.validate.min.js' %}"></script>
+    <!--IMPORTANDO FONTAWESOME PARA ICONOS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!--IMPORTANDO FileInput .js MANEJO DE IMAGENES AL INGRESO -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/css/fileinput.min.css">
+    <script  src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.5.0/js/fileinput.min.js"></script>
+</head>
+<body>
+    <style>
+        /*LETRAS DE COLOR ROJO*/
+        label.error{
+            color: red;
+        }
+        /*BORDE ROJO*/
+        .form-control.error{
+            border: 5px solid red;
+        }
+    </style>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid justify-content-center">
+            <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}"> <b>CINE UTC</b></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'listadoGeneros' %}">Géneros</a> <!--voy a invocar con jinga2-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'listadoDirectores' %}">Directores</a> <!--voy a invocar con jinga2-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'listadoPais' %}">País</a> <!--voy a invocar con jinga2-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'listadoPeliculas' %}">Películas</a> <!--voy a invocar con jinga2-->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'gestionCines' %}">Cines</a> <!--voy a invocar con jinga2-->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block body %}
+    <!--AQUÍ VA EL CONTENIDO DE LA PÁGINA-->
+    {% endblock %}
+    <div class="row bg-dark p-5">
+        <div class="col-md-6 text-center text-white">
+            <b>Desarrollado por:</b>
+            Lenin Flores
+        </div>
+        <div class="col-md-6 text-center text-white">
+            &copy; UTC 2024
+        </div>
+    </div>
+    <!--APLICO JINJA2 PARA HACER LOS ALERT-->
+    {% if messages %}
+        {% for mensaje in messages %} <!--VAMOS A DECIR QUE ESTO VA A VENIR -->
+            {% if mensaje.tags == 'success' %}
+                <script>
+                    Swal.fire({
+                    title: "CONFIRMACIÓN",
+                    text: "Género guardado exitosamente",
+                    icon: "success"
+                });
+                </script>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <!--
+    <script>
+        Swal.fire({
+                title: "CONFIRMACIÓN",
+                text: "Género guardado exitosamente",
+                icon: "success"
+            });
+    </script>
+    -->
+</body>
+</html>

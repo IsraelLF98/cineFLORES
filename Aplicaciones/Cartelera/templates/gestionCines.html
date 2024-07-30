@@ -1,0 +1,113 @@
+{% extends "./plantilla.html" %}
+{% load static %}
+{% block body %}
+
+<div class="container">
+    <h1 class="text-center">Gestión de Cines con Peticiones Asíncronas</h1>
+    <div class="row">
+        <div class="col-md-12 text-end">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa-solid fa-plus"></i> &nbsp; <b>Agregar Cine</b> 
+            </button>
+        </div>
+        <br>
+        <div class="col-md-12" id="contenedor-cines"></div>
+    </div>
+</div>
+<!-- CODIGO DEL Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><b>Nuevo Cine</b></h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--VAMOS A PONER UN FORMULARIO-->
+                <form action="#" id="frm_nuevo_cine">
+                    {% csrf_token %}
+                    <label for=""><b>Nombre:</b></label>
+                    <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre del cine">
+                    <br>
+                    <label for=""><b>Dirección:</b></label>
+                    <input type="text" name="direccion" id="direccion" class="form-control" placeholder="Ingrese la dirección del cine">
+                    <br>
+                    <label for=""><b>Teléfono:</b></label>
+                    <input type="text" name="telefono" id="telefono" class="form-control" placeholder="Ingrese el teléfono del cine">
+                    <br>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <!--EL PRIMER BOTON ES PPARA GUARDAR CAMBIOS-->
+                        <!--ACORDARSE QUE EN LA CLASS EL btn-lg AUMENTA EL TAMAÑO-->
+                        <button type="submit" class="btn btn-success btn-lg"><i class="fa-solid fa-check-double"></i>&nbsp;&nbsp;Guardar cambios</button>
+                        <button type="button" class="btn btn-danger btn-lg" data-bs-dismiss="modal"> <i class="fa-regular fa-circle-xmark"></i>&nbsp;&nbsp;Salir</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br><br><br>
+<!--sccripts-->
+<script>
+    $("#frm_nuevo_cine").validate({
+        //estas son las reglas de validación que nos permite establecer JQUERYVALIDATE
+        rules:{
+            nombre:{
+                required:true
+            },
+            direccion:{
+                required:true
+            },
+            telefono:{
+                required:true,
+                minlength:10,
+                maxlength:15
+            }
+        },
+        messages:{
+            nombre:{
+                required:"Por favor ingrese el nombre del Cine"
+            },
+            descripcion:{
+                required:"Ingrese la descripción del cine"
+            },
+            telefono:{
+                required:"Por favor ingrese el teléfono del cine",
+                minlength:"Debe ser al menos 10 dígitos",
+                maxlength:"Deben tener menos de 15 dígitos"
+            }
+        },
+        //ESTO SE INVOCA CUANDO TODO EL FORMULARIO INGRESA CORRECTAMENTE LOS DATOS O ESTA A PUNTO DE INGRESAR CORRECTAMENTE LOS DATOS
+        submitHandler:function(formulario){
+            //empieza la petición ajax
+            $.ajax({
+                url:"{% url 'guardarCine' %}",
+                type:'post',
+                data:$(formulario).serialize(),
+                success:function(data){
+                    if (data.estado){
+                        console.log(data); //mensaje por consola
+                        Swal.fire({
+                            title:"CONFIRMACION",
+                            text:data.mensaje,
+                            icon:'success'
+                        });
+                        $("#exampleModal").modal('hide'); //CON ESTO CIERRO EL MODAL
+                        $(formulario)[0].reset(); //CON ESTO RESETEO EL MODAL 
+                        cargarCines();//CON ESTA FUNCIÓN CARGO LO QUE INGRESO EN EL MODAL INMEDIATAMENTE
+                    }else{
+                        console.log(data);
+                        alert("Error")
+                    }
+                },
+            });
+        }
+    });
+        //PARA CARGAR A VISUALIZACION LISTADO CINES
+        function cargarCines(){
+            $("#contenedor-cines").load('{% url "listadoCines" %}');
+        }
+        cargarCines();
+</script>
+{% endblock %}

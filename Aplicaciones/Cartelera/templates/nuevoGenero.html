@@ -1,0 +1,69 @@
+
+{% extends "./plantilla.html" %}
+{% block body %}
+<br>
+<div class="container-fluid">
+    <div class="=row">
+        <div class="col-md-12">
+            <!--la etiqueta FORM me va ayudar a guardar los datos-->
+            <form action="{% url 'guardarGenero' %}" enctype="multipart/form-data" id="frm_nuevo_genero" method="post"> <!--METODO POST PARA QUE LOS DATOS VIAJEN A TRAVÉZ DEL METODO POST-->
+                {% csrf_token %} <!--#esta línea me ayuda a guardar los datos-->
+                <label for="">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Ingrese el nombre del género">
+                <br> <br>
+                <label for="" >Descripción:</label>
+                <textarea type="text" name="descripcion" id="descripcion" class="form-control" rows="3" placeholder="Ingrese la descripción del género de la película"></textarea>
+                <br>
+                <label for="" >Fotografía:</label>
+                <input type="file" name="foto" id="foto" accept="image/*" class="form-control" placeholder="Ingrese el archivo">
+                <br>
+                <br>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="{% url 'listadoGeneros' %}" class="btn btn-danger">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</div>
+<br> <br> <br>
+<!--ENBEBER CODIGO O TAMBIEN DICHO COMO MEZCLAR UN CODIGO DDENTRO DE OTRO-->
+<script>
+    //SI DESEO ACCEDER POR ID # Y SI ES POR CLASE (CLASS) .
+    $("#frm_nuevo_genero").validate({
+        rules:{
+            nombre:{
+                required:true,  //si no pongo messages me sale en ingles
+                minlength:3,
+                maxlength:10
+            },
+            descripcion:{
+                required:true
+            },
+            foto:{
+                required:true
+            }
+        },
+        messages:{
+            nombre:{
+                required:"Por favor ingrese el nombre", //coloco los mensajes y me toma en cuenta este mensaje
+                minlength:"El nombre debe tener al menos 3 letras",
+                maxlength:"Máximo 10 carácteres"
+            },
+            descripcion:{
+                required:"Por favor ingrese la descripcion"
+            },
+            foto:{
+                required:"Por favor ingrese la foto"
+            }
+        }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#foto").fileinput({                       
+            showBrowse: true,
+            browseOnZoneClick: true            
+        });
+    });
+    </script>
+{% endblock %}

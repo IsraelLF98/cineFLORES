@@ -1,7 +1,7 @@
 databases:
   - name: servidorLenin
     plan: free
-    databaseName: dbcineUTC
+    databaseName: dbcineutc
     user: lenin
 
 services:
